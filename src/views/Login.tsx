@@ -1,8 +1,5 @@
 'use client'
 
-// React Imports
-import { useState } from 'react'
-
 // Next Imports
 import { useRouter } from 'next/navigation'
 
@@ -10,30 +7,13 @@ import { useRouter } from 'next/navigation'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import InputAdornment from '@mui/material/InputAdornment'
-import Checkbox from '@mui/material/Checkbox'
-import Button from '@mui/material/Button'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Divider from '@mui/material/Divider'
-
-// Third-party Imports
 import classnames from 'classnames'
-
-// Type Imports
 import type { SystemMode } from '@core/types'
-
-// Component Imports
 import Link from '@components/Link'
 import Logo from '@components/layout/shared/Logo'
-import CustomTextField from '@core/components/mui/TextField'
-
-// Config Imports
-import themeConfig from '@configs/themeConfig'
-
-// Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
 import { useSettings } from '@core/hooks/useSettings'
+import { LoginButton } from '@telegram-auth/react'
 
 // Styled Custom Components
 const LoginIllustration = styled('img')(({ theme }) => ({
@@ -61,7 +41,6 @@ const MaskImg = styled('img')({
 
 const LoginV2 = ({ mode }: { mode: SystemMode }) => {
   // States
-  const [isPasswordShown, setIsPasswordShown] = useState(false)
 
   // Vars
   const darkImg = '/images/pages/auth-mask-dark.png'
@@ -85,8 +64,6 @@ const LoginV2 = ({ mode }: { mode: SystemMode }) => {
     borderedLightIllustration,
     borderedDarkIllustration
   )
-
-  const handleClickShowPassword = () => setIsPasswordShown(show => !show)
 
   return (
     <div className='flex bs-full justify-center'>
@@ -113,68 +90,15 @@ const LoginV2 = ({ mode }: { mode: SystemMode }) => {
         </Link>
         <div className='flex flex-col gap-6 is-full sm:is-auto md:is-full sm:max-is-[400px] md:max-is-[unset] mbs-11 sm:mbs-14 md:mbs-0'>
           <div className='flex flex-col gap-1'>
-            <Typography variant='h4'>{`Welcome to ${themeConfig.templateName}! 👋🏻`}</Typography>
-            <Typography>Please sign-in to your account and start the adventure</Typography>
-          </div>
-          <form
-            noValidate
-            autoComplete='off'
-            onSubmit={e => {
-              e.preventDefault()
-              router.push('/')
-            }}
-            className='flex flex-col gap-5'
-          >
-            <CustomTextField autoFocus fullWidth label='Email or Username' placeholder='Enter your email or username' />
-            <CustomTextField
-              fullWidth
-              label='Password'
-              placeholder='············'
-              id='outlined-adornment-password'
-              type={isPasswordShown ? 'text' : 'password'}
-              slotProps={{
-                input: {
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <IconButton edge='end' onClick={handleClickShowPassword} onMouseDown={e => e.preventDefault()}>
-                        <i className={isPasswordShown ? 'tabler-eye-off' : 'tabler-eye'} />
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }
+            <Typography variant='h4'>{`Welcome to E L F A S A 👋🏻`}</Typography>
+            <br />
+            <LoginButton
+              botUsername='elfasa_bot' // Replace with your bot's username
+              onAuthCallback={data => {
+                console.log(data) // Handle the authentication data (user info)
               }}
             />
-            <div className='flex justify-between items-center gap-x-3 gap-y-1 flex-wrap'>
-              <FormControlLabel control={<Checkbox />} label='Remember me' />
-              <Typography className='text-end' color='primary.main' component={Link}>
-                Forgot password?
-              </Typography>
-            </div>
-            <Button fullWidth variant='contained' type='submit'>
-              Login
-            </Button>
-            <div className='flex justify-center items-center flex-wrap gap-2'>
-              <Typography>New on our platform?</Typography>
-              <Typography component={Link} color='primary.main'>
-                Create an account
-              </Typography>
-            </div>
-            <Divider className='gap-2 text-textPrimary'>or</Divider>
-            <div className='flex justify-center items-center gap-1.5'>
-              <IconButton className='text-facebook' size='small'>
-                <i className='tabler-brand-facebook-filled' />
-              </IconButton>
-              <IconButton className='text-twitter' size='small'>
-                <i className='tabler-brand-twitter-filled' />
-              </IconButton>
-              <IconButton className='text-textPrimary' size='small'>
-                <i className='tabler-brand-github-filled' />
-              </IconButton>
-              <IconButton className='text-error' size='small'>
-                <i className='tabler-brand-google-filled' />
-              </IconButton>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </div>
